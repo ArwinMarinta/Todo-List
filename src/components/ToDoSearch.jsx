@@ -1,5 +1,6 @@
 // import React from "react";
 import Search from "../assets/search.svg";
+import { Link } from "react-router-dom";
 
 const ToDoSearch = () => {
   return (
@@ -21,12 +22,14 @@ const ToDoSearch = () => {
             >
               Search
             </button>
-            <button
-              className="bg-blue-600 rounded-md w-[40%] h-10 text-white border-abu border-2"
-              type="submit"
+
+            <Link
+              as={Link}
+              to="/input"
+              className="bg-blue-600 rounded-md w-[40%] h-10 text-white border-abu border-2 flex items-center justify-center"
             >
-              Add New Task
-            </button>
+              <button type="submit">Add New Task</button>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 // import { useState } from "react";
 import Buku from "../assets/book.svg";
+import Back from "../assets/back.svg";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
 const ToDoInput = ({ onAddTask, onChange }) => {
   return (
@@ -12,6 +14,11 @@ const ToDoInput = ({ onAddTask, onChange }) => {
           className="flex flex-col gap-4 mx-auto px-10 py-10 w-full"
           // onSubmit={handleSubmit}
         >
+          <button className="border-2 w-10 bg-blue-600 rounded-md">
+            <Link as={Link} to="/">
+              <img src={Back} className="h-8" />
+            </Link>
+          </button>
           <div className="flex flex-row h-10 ">
             <img src={Buku} className="h-10 bg-blue-600 "></img>
             <input
