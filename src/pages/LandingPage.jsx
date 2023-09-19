@@ -1,31 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ToDoInput from "../components/ToDoInput";
 import TodoForm from "../components/ToDoForm";
-import ListTasks from "../components/ToDoData";
+// import ListTasks from "../components/ToDoData";
+import Data from "../data.json";
 // import { Input } from "postcss";
 // import TodoDatab from "./components/ToDoData"
 // import { ListTasks } from "../src/components/ToDoData";
 // import ToDoList from "./components/ToDoList";
-// import { ToDoSearch } from "./components/ToDoSearch";
-// import { useImmerReducer } from "use-immer";
+// import { useImmerReducer } from "use-immer";\
+import ToDoSearch from "../components/ToDoSearch";
 
 function LandingPage() {
-  const [task, setTask] = useState(ListTasks);
+  const [task, setTask] = useState(Data);
   const [text, setText] = useState("");
 
   const handleChange = (e) => {
     setText(e.target.value);
   };
 
+  useEffect(() => {
+    console.log(task);
+  }, [task]);
+
   // const [text, setText] = useState("");
   const handleInput = (e) => {
     e.preventDefault();
-    const id = task.length + 1;
-    console.log(task);
+
     setTask([
       ...task,
       {
-        id: id,
+        id: task.length + 1,
         task: text,
         complete: false,
       },
@@ -38,16 +42,28 @@ function LandingPage() {
     setTask(task.filter((tasks) => tasks.id !== id));
   };
 
+  const handleToggle = (id) => {
+    setTask((task) =>
+      task.map((tasks) =>
+        tasks.id === id ? { ...tasks, checked: !tasks.checked } : tasks
+      )
+    );
+  };
+
   return (
     <>
       <div className=" mx-auto px-10 w-full ">
         <div className="mt-4 w-full">
           <ToDoInput onAddTask={handleInput} onChange={handleChange} />
         </div>
-        {/* <div className="mt-10">
-        <ToDoSearch />
-      </div> */}
-        <TodoForm onDeleteTask={deleteTask} tasks={task} />
+        <div className="mt-10">
+          <ToDoSearch />
+        </div>
+        <TodoForm
+          onDeleteTask={deleteTask}
+          tasks={task}
+          onToggleComplate={handleToggle}
+        />
         <div className="mt-10"></div>
       </div>
     </>
