@@ -2,13 +2,11 @@
 import Editing from "../assets/edit.svg";
 import Delete from "../assets/delete2.svg";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+// import { filterTask } from "./FilterList";
+// import {Task} from "../components/TaskList"
 
 const ToDoForm = ({ tasks, onDeleteTask, onToggleComplate }) => {
-  // const handleDelete = (e) => {
-  //   e.preventDefault();
-  //   onDeleteTask(tasks.id);
-  // };
-
   return (
     <>
       <form className=" flex flex-col mt-10 gap-4">
@@ -17,7 +15,11 @@ const ToDoForm = ({ tasks, onDeleteTask, onToggleComplate }) => {
             <div className="border-2 h-10 flex justify-between items-center font-bold rounded-md">
               <h2
                 className="ml-10"
-                style={list.complete ? { textDecoration: "line-through" } : {}}
+                style={
+                  list.complete
+                    ? { textDecoration: "line-through", color: "red" }
+                    : {}
+                }
               >
                 {list.task}
               </h2>
@@ -29,9 +31,12 @@ const ToDoForm = ({ tasks, onDeleteTask, onToggleComplate }) => {
                   onChange={() => onToggleComplate(list.id)}
                   checked={list.complete}
                 ></input>
-                <button>
-                  <img src={Editing} />
-                </button>
+                <Link as={Link} to="/edite">
+                  <button>
+                    <img src={Editing} />
+                  </button>
+                </Link>
+
                 <button onClick={() => onDeleteTask(list.id)}>
                   <img className="h-6" src={Delete} />
                 </button>
@@ -48,6 +53,7 @@ ToDoForm.propTypes = {
   tasks: PropTypes.array,
   onDeleteTask: PropTypes.func,
   onToggleComplate: PropTypes.func,
+  // show: PropTypes.string,
 };
 
 export default ToDoForm;

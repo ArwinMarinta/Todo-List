@@ -1,6 +1,6 @@
 import { PropTypes } from "prop-types";
 
-const ToDoList = ({ onFilterDone, onFilterAll, onFilterTodo }) => {
+const ToDoList = ({ onFilterTask }) => {
   return (
     <>
       <div className="flex flex-col">
@@ -8,19 +8,19 @@ const ToDoList = ({ onFilterDone, onFilterAll, onFilterTodo }) => {
         <div className="flex flex-row gap-10">
           <button
             className="bg-blue-600 rounded-md w-[40%] h-10 text-white border-abu border-2"
-            onClick={onFilterAll}
+            onClick={() => onFilterTask("all")}
           >
             All
           </button>
           <button
             className="bg-blue-600 rounded-md w-[40%] h-10 text-white border-abu border-2"
-            onClick={onFilterDone}
+            onClick={() => onFilterTask("complete")}
           >
             Done
           </button>
           <button
             className="bg-blue-600 rounded-md w-[40%] h-10 text-white border-abu border-2"
-            onClick={onFilterTodo}
+            onClick={() => onFilterTask("uncomplete")}
           >
             Todo
           </button>
@@ -32,9 +32,11 @@ const ToDoList = ({ onFilterDone, onFilterAll, onFilterTodo }) => {
 };
 
 ToDoList.propTypes = {
-  onFilterDone: PropTypes.func,
-  onFilterAll: PropTypes.func,
-  onFilterTodo: PropTypes.func,
+  // onFilterDone: PropTypes.array,
+  // onFilterAll: PropTypes.array,
+  // onFilterTodo: PropTypes.array,
+  onFilterTask: PropTypes.func,
+  onChangeTask: PropTypes.func,
 };
 
 export default ToDoList;

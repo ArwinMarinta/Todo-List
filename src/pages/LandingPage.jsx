@@ -5,11 +5,37 @@ import Data from "../data.json";
 import TodoDelete from "../components/ToDoDelete";
 import ToDoSearch from "../components/ToDoSearch";
 import TodoList from "../components/ToDoList";
+// import filterTask from "../components/FilterList";
 
 function LandingPage() {
   const [task, setTask] = useState(Data);
   const [text, setText] = useState("");
-  // const [showDone, setShowDone] = useState(true);
+  const [show, setShow] = useState("all");
+
+  const oriTaskData = Data;
+  const filterTask = () => {
+    if (show === "complete") {
+      setTask(oriTaskData.filter((tasks) => tasks.complete === true));
+    } else if (show === "uncomplete") {
+      setTask(oriTaskData.filter((tasks) => tasks.complete === false));
+    } else {
+      setTask(oriTaskData);
+    }
+  };
+
+  const handleChangeFilter = (e) => {
+    setShow(e.target.value);
+  };
+
+  // const allData = filterTask({ tasks: task, show: "all" });
+  // const completeDone = filterTask({ tasks: task, show: "complete" });
+  // const completeTodo = filterTask({ tasks: task, show: "uncomplete" });
+
+  const handleEdite = (newTodo) => {
+    setTask(task.find((tasks) => tasks.id === newTodo.id));
+    task.task = newTodo.task;
+    task.done = newTodo.done;
+  };
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -49,8 +75,8 @@ function LandingPage() {
     console.log(task);
   };
 
-  const clearDoneTask = (complete) => {
-    setTask(task.filter((tasks) => tasks.id != complete));
+  const clearDoneTask = () => {
+    setTask(task.filter((tasks) => tasks.complete !== true));
   };
 
   const deleteTask = (id) => {
@@ -76,15 +102,18 @@ function LandingPage() {
         </div>
         <div className="mt-10">
           <TodoList
-            onFilterDone={handleDone}
-            onFilterAll={handleAll}
-            onFilterTodo={handleTodo}
+            onFilterTask={filterTask}
+            onChangeTask={handleChangeFilter}
+            // onFilterDone={handleDone}
+            // onFilterAll={handleAll}
+            // onFilterTodo={handleTodo}
           />
         </div>
         <TodoForm
           onDeleteTask={deleteTask}
           tasks={task}
           onToggleComplate={handleToggle}
+          onChangeTodo={handleEdite}
         />
         <div className="mt-10">
           <TodoDelete onClearAll={clearAllData} onClearDone={clearDoneTask} />
