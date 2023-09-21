@@ -25,6 +25,33 @@ function LandingPage() {
 
   const filterTask = task.filter((tasks) => tasks.task);
 
+  // const handleChangeFilter = (item) => {
+  //   setShow(item);
+  // };
+
+  //Todo Search
+  // const onSearchChange = (event) => {
+  //   event.preventDefault();
+  //   setTask(event);
+  // };
+  // const search = (items, str) => {
+  //   if (str) {
+  //     return items.filter((item) => {
+  //       return item.label.toLowerCase().indexOf(str.toLowerCase()) > -1;
+  //     });
+  //   }
+  //   return items;
+  // };
+
+  // const handleSearch = (event) => {
+  //   const value = event.target.value;
+  //   setTask((item) => {
+  //     return item.filter((item) =>
+  //       item.toLowerCase().includes(value.toLowerCase)
+  //     );
+  //   });
+  // };
+
   useEffect(() => {
     setShow(task);
   }, [task]);
@@ -52,7 +79,7 @@ function LandingPage() {
     setShow(show.filter((tasks) => tasks.complete !== true));
   };
 
-  //Fungsi untuk menghapus task
+  //Fungsi untuk menghapus show
   const deleteTask = (id) => {
     setShow(show.filter((tasks) => tasks.id !== id));
     console.log(show);
@@ -73,12 +100,23 @@ function LandingPage() {
   };
 
   const handleToggle = (id) => {
-    setShow((show) =>
-      show.map((tasks) =>
+    setShow((task) =>
+      task.map((tasks) =>
         tasks.id === id ? { ...tasks, complete: !tasks.complete } : tasks
       )
     );
   };
+
+  // const handleAll = () => {
+  //   window.location.reload(true);
+  // };
+
+  // const handleDone = () => {
+  //   setTask(task.filter((tasks) => tasks.complete == true));
+  // };
+  // const handleTodo = () => {
+  //   setTask(task.filter((tasks) => tasks.complete == false));
+  // };
 
   return (
     <>

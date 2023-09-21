@@ -36,6 +36,7 @@ const ToDoForm = ({
                   type="checkbox"
                   className="h-14 cursor-pointer"
                   onChange={() => onToggleComplate(list.id)}
+                  checked={list.complete}
                 ></input>
 
                 <button type="button" onClick={() => onEditeTodo(list.id)}>
