@@ -1,8 +1,13 @@
 // import React from "react";
 import Search from "../assets/search.svg";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const ToDoSearch = () => {
+const ToDoSearch = ({ onSearchChange, text }) => {
+  const handleChange = (e) => {
+    onSearchChange(e.currentTarget.value);
+  };
+
   return (
     <form>
       <h1 className="mb-10 font-bold text-3xl">Todo Search</h1>
@@ -13,6 +18,8 @@ const ToDoSearch = () => {
             <input
               placeholder="  Search Todo"
               className="bg-white w-full rounded-r-md border-2 border-border"
+              onChange={handleChange}
+              value={text}
             />
           </div>
           <div className="flex flex-row gap-10 ">
@@ -37,4 +44,8 @@ const ToDoSearch = () => {
   );
 };
 
+ToDoSearch.propTypes = {
+  onSearchChange: PropTypes.func,
+  text: PropTypes.string,
+};
 export default ToDoSearch;

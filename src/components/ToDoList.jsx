@@ -37,6 +37,7 @@ ToDoList.propTypes = {
   // onFilterTodo: PropTypes.array,
   onFilterTask: PropTypes.func,
   onChangeTask: PropTypes.func,
+  handleChangeFilter: PropTypes.func,
 };
 
 export default ToDoList;

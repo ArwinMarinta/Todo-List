@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ToDoInput from "../components/ToDoInput";
 import TodoForm from "../components/ToDoForm";
 import Data from "../data.json";
@@ -10,56 +10,71 @@ import TodoList from "../components/ToDoList";
 function LandingPage() {
   const [task, setTask] = useState(Data);
   const [text, setText] = useState("");
-  const [show, setShow] = useState("all");
+  const [show, setShow] = useState(task);
 
-  const oriTaskData = Data;
-  const filterTask = () => {
-    if (show === "complete") {
-      setTask(oriTaskData.filter((tasks) => tasks.complete === true));
-    } else if (show === "uncomplete") {
-      setTask(oriTaskData.filter((tasks) => tasks.complete === false));
-    } else {
-      setTask(oriTaskData);
+  //fungsi untuk melihat sem
+  const handlefilterTask = (showTodo) => {
+    if (showTodo === "all") {
+      setShow(filterTask);
+    } else if (showTodo === "complete") {
+      setShow(filterTask.filter((filters) => filters.complete === true));
+    } else if (showTodo === "uncomplete") {
+      setShow(filterTask.filter((filters) => filters.complete === false));
     }
   };
 
-  const handleChangeFilter = (e) => {
-    setShow(e.target.value);
-  };
+  const filterTask = task.filter((tasks) => tasks.id);
 
-  // const allData = filterTask({ tasks: task, show: "all" });
-  // const completeDone = filterTask({ tasks: task, show: "complete" });
-  // const completeTodo = filterTask({ tasks: task, show: "uncomplete" });
+  // const handleChangeFilter = (e) => {
+  //   setShow(e);
+  // };
 
-  const handleEdite = (newTodo) => {
-    setTask(task.find((tasks) => tasks.id === newTodo.id));
-    task.task = newTodo.task;
-    task.done = newTodo.done;
+  //Todo Search
+  // const onSearchChange = (event) => {
+  //   event.preventDefault();
+  //   setTask(event);
+  // };
+  // const search = (items, str) => {
+  //   if (str) {
+  //     return items.filter((item) => {
+  //       return item.label.toLowerCase().indexOf(str.toLowerCase()) > -1;
+  //     });
+  //   }
+  //   return items;
+  // };
+
+  useEffect(() => {
+    setTask(task);
+  }, [task]);
+
+  const handleEdite = (id) => {
+    const newText = prompt("Edit todo:", task[id - 1].task);
+    if (newText !== null) {
+      const updatedTodos = [...task];
+      updatedTodos[id - 1].task = newText;
+      setTask(updatedTodos);
+    }
   };
 
   const handleChange = (e) => {
     setText(e.target.value);
   };
 
-  const handleAll = () => {
-    setTask([...task]);
-  };
+  //fungsi untuk menghapus semua Task
   const clearAllData = () => {
     setTask([]);
   };
 
-  const handleDone = () => {
-    setTask(task.filter((tasks) => tasks.complete == true));
-  };
-  const handleTodo = () => {
-    setTask(task.filter((tasks) => tasks.complete == false));
+  //Fungsi untuk menghapus task yang sudah selesai
+  const clearDoneTask = () => {
+    setTask(task.filter((tasks) => tasks.complete !== true));
   };
 
-  // useEffect(() => {
-  //   console.log(task);
-  // }, [task]);
+  //Fungsi untuk menghapus task
+  const deleteTask = (id) => {
+    setTask(task.filter((tasks) => tasks.id !== id));
+  };
 
-  // const [text, setText] = useState("");
   const handleInput = (e) => {
     e.preventDefault();
 
@@ -72,15 +87,6 @@ function LandingPage() {
       },
     ]);
     setText("");
-    console.log(task);
-  };
-
-  const clearDoneTask = () => {
-    setTask(task.filter((tasks) => tasks.complete !== true));
-  };
-
-  const deleteTask = (id) => {
-    setTask(task.filter((tasks) => tasks.id !== id));
   };
 
   const handleToggle = (id) => {
@@ -102,19 +108,24 @@ function LandingPage() {
         </div>
         <div className="mt-10">
           <TodoList
-            onFilterTask={filterTask}
-            onChangeTask={handleChangeFilter}
+            onFilterTask={handlefilterTask}
+            // onChangeTask={handleChangeFilter}
             // onFilterDone={handleDone}
             // onFilterAll={handleAll}
             // onFilterTodo={handleTodo}
           />
         </div>
+
         <TodoForm
+          // search={search}
           onDeleteTask={deleteTask}
           tasks={task}
           onToggleComplate={handleToggle}
-          onChangeTodo={handleEdite}
+          onEditeTodo={handleEdite}
+          filterTask={filterTask}
+          show={show}
         />
+
         <div className="mt-10">
           <TodoDelete onClearAll={clearAllData} onClearDone={clearDoneTask} />
         </div>

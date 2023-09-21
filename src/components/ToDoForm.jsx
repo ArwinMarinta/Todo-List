@@ -2,11 +2,18 @@
 import Editing from "../assets/edit.svg";
 import Delete from "../assets/delete2.svg";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 // import { filterTask } from "./FilterList";
 // import {Task} from "../components/TaskList"
 
-const ToDoForm = ({ tasks, onDeleteTask, onToggleComplate }) => {
+const ToDoForm = ({
+  tasks,
+  onDeleteTask,
+  onToggleComplate,
+  onEditeTodo,
+  // show,
+  // onFilterTask,
+}) => {
+  // const visibleElement = onFilterTask(tasks, show);
   return (
     <>
       <form className=" flex flex-col mt-10 gap-4">
@@ -31,11 +38,10 @@ const ToDoForm = ({ tasks, onDeleteTask, onToggleComplate }) => {
                   onChange={() => onToggleComplate(list.id)}
                   checked={list.complete}
                 ></input>
-                <Link as={Link} to="/edite">
-                  <button>
-                    <img src={Editing} />
-                  </button>
-                </Link>
+
+                <button type="button" onClick={() => onEditeTodo(list.id)}>
+                  <img src={Editing} />
+                </button>
 
                 <button onClick={() => onDeleteTask(list.id)}>
                   <img className="h-6" src={Delete} />
@@ -53,7 +59,12 @@ ToDoForm.propTypes = {
   tasks: PropTypes.array,
   onDeleteTask: PropTypes.func,
   onToggleComplate: PropTypes.func,
+  // search: PropTypes.func,
+  onEditeTodo: PropTypes.func,
+  show: PropTypes.array,
+  // filterTask: PropTypes.array,
   // show: PropTypes.string,
+  // onFilterTask: PropTypes.func,
 };
 
 export default ToDoForm;
