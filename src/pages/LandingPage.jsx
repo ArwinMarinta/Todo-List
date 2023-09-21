@@ -12,7 +12,7 @@ function LandingPage() {
   const [text, setText] = useState("");
   const [show, setShow] = useState(task);
 
-  //fungsi untuk melihat sem
+  //fungsi untuk melihat all, done dan todo
   const handlefilterTask = (showTodo) => {
     if (showTodo === "all") {
       setShow(filterTask);
@@ -23,28 +23,10 @@ function LandingPage() {
     }
   };
 
-  const filterTask = task.filter((tasks) => tasks.id);
-
-  // const handleChangeFilter = (e) => {
-  //   setShow(e);
-  // };
-
-  //Todo Search
-  // const onSearchChange = (event) => {
-  //   event.preventDefault();
-  //   setTask(event);
-  // };
-  // const search = (items, str) => {
-  //   if (str) {
-  //     return items.filter((item) => {
-  //       return item.label.toLowerCase().indexOf(str.toLowerCase()) > -1;
-  //     });
-  //   }
-  //   return items;
-  // };
+  const filterTask = task.filter((tasks) => tasks.task);
 
   useEffect(() => {
-    setTask(task);
+    setShow(task);
   }, [task]);
 
   const handleEdite = (id) => {
@@ -52,7 +34,7 @@ function LandingPage() {
     if (newText !== null) {
       const updatedTodos = [...task];
       updatedTodos[id - 1].task = newText;
-      setTask(updatedTodos);
+      setShow(updatedTodos);
     }
   };
 
@@ -62,17 +44,18 @@ function LandingPage() {
 
   //fungsi untuk menghapus semua Task
   const clearAllData = () => {
-    setTask([]);
+    setShow([]);
   };
 
   //Fungsi untuk menghapus task yang sudah selesai
   const clearDoneTask = () => {
-    setTask(task.filter((tasks) => tasks.complete !== true));
+    setShow(show.filter((tasks) => tasks.complete !== true));
   };
 
   //Fungsi untuk menghapus task
   const deleteTask = (id) => {
-    setTask(task.filter((tasks) => tasks.id !== id));
+    setShow(show.filter((tasks) => tasks.id !== id));
+    console.log(show);
   };
 
   const handleInput = (e) => {
@@ -90,8 +73,8 @@ function LandingPage() {
   };
 
   const handleToggle = (id) => {
-    setTask((task) =>
-      task.map((tasks) =>
+    setShow((show) =>
+      show.map((tasks) =>
         tasks.id === id ? { ...tasks, complete: !tasks.complete } : tasks
       )
     );
@@ -107,23 +90,16 @@ function LandingPage() {
           <ToDoSearch />
         </div>
         <div className="mt-10">
-          <TodoList
-            onFilterTask={handlefilterTask}
-            // onChangeTask={handleChangeFilter}
-            // onFilterDone={handleDone}
-            // onFilterAll={handleAll}
-            // onFilterTodo={handleTodo}
-          />
+          <TodoList onFilterTask={handlefilterTask} />
         </div>
 
         <TodoForm
           // search={search}
           onDeleteTask={deleteTask}
-          tasks={task}
+          tasks={show}
           onToggleComplate={handleToggle}
           onEditeTodo={handleEdite}
           filterTask={filterTask}
-          show={show}
         />
 
         <div className="mt-10">

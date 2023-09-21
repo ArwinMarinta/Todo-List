@@ -16,6 +16,7 @@ const ToDoSearch = ({ onSearchChange, text }) => {
           <div className="flex flex-row h-10 w-[80%] self-center">
             <img src={Search} className="h-10 bg-blue-600 "></img>
             <input
+              type="search"
               placeholder="  Search Todo"
               className="bg-white w-full rounded-r-md border-2 border-border"
               onChange={handleChange}

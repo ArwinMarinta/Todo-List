@@ -16,7 +16,7 @@ const ToDoForm = ({
   // const visibleElement = onFilterTask(tasks, show);
   return (
     <>
-      <form className=" flex flex-col mt-10 gap-4">
+      <div className=" flex flex-col mt-10 gap-4">
         {tasks.map((list) => (
           <div key={list.id}>
             <div className="border-2 h-10 flex justify-between items-center font-bold rounded-md">
@@ -36,7 +36,6 @@ const ToDoForm = ({
                   type="checkbox"
                   className="h-14 cursor-pointer"
                   onChange={() => onToggleComplate(list.id)}
-                  checked={list.complete}
                 ></input>
 
                 <button type="button" onClick={() => onEditeTodo(list.id)}>
@@ -50,7 +49,7 @@ const ToDoForm = ({
             </div>
           </div>
         ))}
-      </form>
+      </div>
     </>
   );
 };
