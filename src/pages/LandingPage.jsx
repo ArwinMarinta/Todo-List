@@ -25,9 +25,9 @@ function LandingPage() {
 
   const filterTask = task.filter((tasks) => tasks.task);
 
-  // const handleChangeFilter = (item) => {
-  //   setShow(item);
-  // };
+  const handleChangeFilter = (item) => {
+    setShow(item);
+  };
 
   //Todo Search
   // const onSearchChange = (event) => {
@@ -100,7 +100,7 @@ function LandingPage() {
   };
 
   const handleToggle = (id) => {
-    setShow((task) =>
+    setTask((task) =>
       task.map((tasks) =>
         tasks.id === id ? { ...tasks, complete: !tasks.complete } : tasks
       )
