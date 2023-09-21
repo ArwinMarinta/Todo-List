@@ -22,6 +22,7 @@ const ToDoInput = ({ onAddTask, onChange }) => {
           <div className="flex flex-row h-10 ">
             <img src={Buku} className="h-10 bg-blue-600 "></img>
             <input
+              // value={text}
               onChange={onChange}
               placeholder="  Input/Edit"
               // onChange={(e) => setText(e.target.value)}
@@ -43,7 +44,8 @@ const ToDoInput = ({ onAddTask, onChange }) => {
 ToDoInput.propTypes = {
   onAddTask: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  // setText: PropTypes.string,
+  // setText: PropTypes.string.isRequired,
+  // Text: PropTypes.string,
 };
 
 export default ToDoInput;

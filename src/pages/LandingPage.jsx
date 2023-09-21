@@ -7,10 +7,24 @@ import ToDoSearch from "../components/ToDoSearch";
 import TodoList from "../components/ToDoList";
 // import filterTask from "../components/FilterList";
 
+localStorage.setItem("userData", JSON.stringify(Data));
+
+const getLocalStorage = () => {
+  let Data = localStorage.getItem("Data");
+  if (Data) {
+    return (Data = JSON.parse(localStorage.getItem("Data")));
+  } else {
+    return [];
+  }
+};
+
 function LandingPage() {
-  const [task, setTask] = useState(Data);
+  const [task, setTask] = useState(getLocalStorage());
   const [text, setText] = useState("");
   const [show, setShow] = useState(task);
+  useEffect(() => {
+    localStorage.setItem("Data", JSON.stringify(task));
+  }, [task]);
 
   //fungsi untuk melihat all, done dan todo
   const handlefilterTask = (showTodo) => {
@@ -23,11 +37,8 @@ function LandingPage() {
     }
   };
 
-  const filterTask = task.filter((tasks) => tasks.task);
-
-  const handleChangeFilter = (item) => {
-    setShow(item);
-  };
+  //fungsi untuk mengambil data task tanpa mengubah nya
+  const filterTask = task.filter((tasks) => tasks.id);
 
   //Todo Search
   // const onSearchChange = (event) => {
@@ -51,11 +62,12 @@ function LandingPage() {
   //     );
   //   });
   // };
-
+  //untuk merender ulang useState show dari Task
   useEffect(() => {
     setShow(task);
   }, [task]);
 
+  //fungsi untuk mengedite task yang sudah ada menggunakan promt
   const handleEdite = (id) => {
     const newText = prompt("Edit todo:", task[id - 1].task);
     if (newText !== null) {
@@ -88,15 +100,16 @@ function LandingPage() {
   const handleInput = (e) => {
     e.preventDefault();
 
-    setTask([
-      ...task,
-      {
-        id: task.length + 1,
-        task: text,
-        complete: false,
-      },
-    ]);
-    setText("");
+    if (text.trim()) {
+      setTask([
+        ...task,
+        {
+          id: task.length + 1,
+          task: text,
+          complete: false,
+        },
+      ]);
+    }
   };
 
   const handleToggle = (id) => {
@@ -122,7 +135,11 @@ function LandingPage() {
     <>
       <div className=" mx-auto px-10 w-full ">
         <div className="mt-4 w-full">
-          <ToDoInput onAddTask={handleInput} onChange={handleChange} />
+          <ToDoInput
+            onAddTask={handleInput}
+            onChange={handleChange}
+            setText={setText}
+          />
         </div>
         <div className="mt-10">
           <ToDoSearch />
