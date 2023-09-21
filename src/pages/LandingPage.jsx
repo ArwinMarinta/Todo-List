@@ -1,30 +1,31 @@
 import { useEffect, useState } from "react";
-import ToDoInput from "../components/ToDoInput";
+// import ToDoInput from "../components/ToDoInput";
 import TodoForm from "../components/ToDoForm";
-import Data from "../data.json";
+// import Data from "../data.json";
 import TodoDelete from "../components/ToDoDelete";
 import ToDoSearch from "../components/ToDoSearch";
 import TodoList from "../components/ToDoList";
+import PropTypes from "prop-types";
 // import filterTask from "../components/FilterList";
 
-localStorage.setItem("userData", JSON.stringify(Data));
+// localStorage.setItem("userData", JSON.stringify(Data));
 
-const getLocalStorage = () => {
-  let Data = localStorage.getItem("Data");
-  if (Data) {
-    return (Data = JSON.parse(localStorage.getItem("Data")));
-  } else {
-    return [];
-  }
-};
+// const getLocalStorage = () => {
+//   let Data = localStorage.getItem("Data");
+//   if (Data) {
+//     return (Data = JSON.parse(localStorage.getItem("Data")));
+//   } else {
+//     return [];
+//   }
+// };
 
-function LandingPage() {
-  const [task, setTask] = useState(getLocalStorage());
-  const [text, setText] = useState("");
+function LandingPage({ task, setTask }) {
+  // const [task, setTask] = useState(getLocalStorage());
+  // const [text, setText] = useState("");
   const [show, setShow] = useState(task);
-  useEffect(() => {
-    localStorage.setItem("Data", JSON.stringify(task));
-  }, [task]);
+  // useEffect(() => {
+  //   localStorage.setItem("Data", JSON.stringify(task));
+  // }, [task]);
 
   //fungsi untuk melihat all, done dan todo
   const handlefilterTask = (showTodo) => {
@@ -67,19 +68,26 @@ function LandingPage() {
     setShow(task);
   }, [task]);
 
-  //fungsi untuk mengedite task yang sudah ada menggunakan promt
+  // fungsi untuk mengedite task yang sudah ada menggunakan promt
   const handleEdite = (id) => {
     const newText = prompt("Edit todo:", task[id - 1].task);
     if (newText !== null) {
       const updatedTodos = [...task];
       updatedTodos[id - 1].task = newText;
       setShow(updatedTodos);
+      localStorage.setItem("Data", JSON.stringify(updatedTodos));
     }
   };
 
-  const handleChange = (e) => {
-    setText(e.target.value);
-  };
+  // const handleEdite = (id) => {
+  //   const editTask = task.find((tasks) => {
+  //     return tasks.id === id;
+  //   });
+  // };
+
+  // const handleChange = (e) => {
+  //   setText(e.target.value);
+  // };
 
   //fungsi untuk menghapus semua Task
   const clearAllData = () => {
@@ -88,29 +96,34 @@ function LandingPage() {
 
   //Fungsi untuk menghapus task yang sudah selesai
   const clearDoneTask = () => {
-    setShow(show.filter((tasks) => tasks.complete !== true));
+    const clearTask = task.filter((tasks) => {
+      return tasks.complete !== true;
+    });
+    setTask(clearTask);
   };
 
   //Fungsi untuk menghapus show
   const deleteTask = (id) => {
-    setShow(show.filter((tasks) => tasks.id !== id));
-    console.log(show);
+    const deleteItem = task.filter((tasks) => {
+      return id !== tasks.id;
+    });
+    setTask(deleteItem);
   };
 
-  const handleInput = (e) => {
-    e.preventDefault();
+  // const handleInput = (e) => {
+  //   e.preventDefault();
 
-    if (text.trim()) {
-      setTask([
-        ...task,
-        {
-          id: task.length + 1,
-          task: text,
-          complete: false,
-        },
-      ]);
-    }
-  };
+  //   if (text.trim()) {
+  //     setTask([
+  //       ...task,
+  //       {
+  //         id: task.length + 1,
+  //         task: text,
+  //         complete: false,
+  //       },
+  //     ]);
+  //   }
+  // };
 
   const handleToggle = (id) => {
     setTask((task) =>
@@ -134,13 +147,13 @@ function LandingPage() {
   return (
     <>
       <div className=" mx-auto px-10 w-full ">
-        <div className="mt-4 w-full">
+        {/* <div className="mt-4 w-full">
           <ToDoInput
             onAddTask={handleInput}
             onChange={handleChange}
             setText={setText}
           />
-        </div>
+        </div> */}
         <div className="mt-10">
           <ToDoSearch />
         </div>
@@ -164,5 +177,11 @@ function LandingPage() {
     </>
   );
 }
+LandingPage.propTypes = {
+  // text: PropTypes.string,
+  task: PropTypes.func,
+  // setText: PropTypes.string,
+  setTask: PropTypes.func,
+};
 
 export default LandingPage;
