@@ -1,4 +1,3 @@
-// import { useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./pages/LandingPage";
@@ -6,7 +5,7 @@ import InputTodo from "./pages/InputTodo";
 import { useState, useEffect } from "react";
 import Data from "./data.json";
 
-localStorage.setItem("userData", JSON.stringify(Data));
+localStorage.setItem("Data", JSON.stringify(Data));
 
 const getLocalStorage = () => {
   let Data = localStorage.getItem("Data");

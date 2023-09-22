@@ -9,6 +9,21 @@ function LandingPage({ task, setTask }) {
   const [show, setShow] = useState(task);
   const [searchTask, setSearchTask] = useState("");
 
+  // const searchTodo = (show, items) => {
+  //   const hasilPencarian = show.filter(function (tasks) {
+  //     return tasks.task.toLowerCase().includes(items.toLowerCase());
+  //   });
+  //   return hasilPencarian;
+  // };
+  // const handleButtonSearchTodo = (e) => {
+  //   e.preventDefault();
+  //   setTask(searchTodo(show, searchTask));
+  // };
+
+  // const handleSearchTodo = (e) => {
+  //   setSearchTask(e.target.value);
+  // };
+
   //fungsi untuk melihat all, done dan todo
   const handlefilterTask = (showTodo) => {
     if (showTodo === "all") {

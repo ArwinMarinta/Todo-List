@@ -2,8 +2,6 @@
 import Editing from "../assets/edit.svg";
 import Delete from "../assets/delete2.svg";
 import PropTypes from "prop-types";
-// import { filterTask } from "./FilterList";
-// import {Task} from "../components/TaskList"
 
 const ToDoForm = ({
   tasks,
@@ -18,7 +16,7 @@ const ToDoForm = ({
     <>
       <div className=" flex flex-col mt-10 gap-4">
         {tasks
-          .filter((list) => list.task.toLowerCase().includes(searchTask))
+          .filter((list) => list.task.toString().includes(searchTask))
           .map((list) => (
             <div key={list.id}>
               <div className="border-2 h-10 flex justify-between items-center font-bold rounded-md">
@@ -64,8 +62,6 @@ ToDoForm.propTypes = {
   onEditeTodo: PropTypes.func,
   show: PropTypes.array,
   searchTask: PropTypes.string,
-  // onSearchTask: PropTypes.func,
-  // searchTask: PropTypes.func,
 };
 
 export default ToDoForm;

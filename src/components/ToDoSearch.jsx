@@ -26,7 +26,7 @@ const ToDoSearch = ({ text, setSearchTask }) => {
           <div className="flex flex-row gap-10 ">
             <button
               className="bg-blue-600 font-bold rounded-md w-[60%] h-10 text-white border-abu border-2 "
-              onClick={handleChange}
+              // onClick={handleChange}
               type="button"
             >
               Search
