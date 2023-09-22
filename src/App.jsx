@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import LandingPage from "./pages/LandingPage";
 import InputTodo from "./pages/InputTodo";
-import EditeTodo from "./pages/EditeTodo";
 import { useState, useEffect } from "react";
 import Data from "./data.json";
 
@@ -48,7 +47,6 @@ function App() {
             />
           }
         />
-        <Route path="/edite" element={<EditeTodo />} />
         <Route path="*" element={<h1>404 NOT FOUND</h1>} />
       </Routes>
     </BrowserRouter>

@@ -1,20 +1,24 @@
 import TodoInput from "../components/ToDoInput";
-// import { useState } from "react";
 import PropTypes from "prop-types";
 
 function InputTodo({ text, task, setText, setTask }) {
   const handleInput = (e) => {
     e.preventDefault();
 
+    alert(`${text} telah di tambahkan`);
+
     if (text.trim()) {
-      setTask([
-        ...task,
-        {
-          id: task.length + 1,
-          task: text,
-          complete: false,
-        },
-      ]);
+      const newInput = () => {
+        setTask([
+          ...task,
+          {
+            id: task.length + 1,
+            task: text,
+            complete: false,
+          },
+        ]);
+      };
+      setText(newInput);
     }
   };
 
@@ -35,8 +39,8 @@ function InputTodo({ text, task, setText, setTask }) {
 InputTodo.propTypes = {
   text: PropTypes.string,
   task: PropTypes.array,
-  setText: PropTypes.string,
-  setTask: PropTypes.array,
+  setText: PropTypes.func,
+  setTask: PropTypes.func,
 };
 
 export default InputTodo;
